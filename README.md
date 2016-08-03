@@ -1,5 +1,5 @@
 # BDC
-Break-Dark-Clouds plan.
+Break-Dark-Clouds plan. You can [try it online](https://zhoukekestar.github.io/BDC/).
 
 # Repos
 * [pinyin](https://github.com/hotoo/pinyin)
