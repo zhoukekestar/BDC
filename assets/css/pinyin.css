@@ -1,0 +1,16 @@
+.pinyin u {
+  text-decoration: none;
+  position: relative;
+  display: inline-block;
+  text-align: center;
+  padding: 5px;
+  min-width: 30px;
+}
+.pinyin b {
+  display: block;
+  font-weight: 100;
+}
+.pinyin i {
+  display: block;
+  font-style: normal;
+}
