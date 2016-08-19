@@ -41,12 +41,16 @@
       background-color: rgba(224, 224, 224, 0.3);
       border: none;
       position: absolute;
-      bottom: 20px;
       right: 10px;
       padding: 5px;
       border-radius: 4px;
       cursor: pointer;
       outline: none;
+      bottom: 80px;
+    }
+    .wrapper button + button {
+      background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAOVBMVEVHcExVquRVq+RUq+NWquRVquNVquRWq+NQr+9Vq+NVrOZYr+dUq+RVq+RVq+NVq+RVquRWquNWq+TmQAVKAAAAEnRSTlMAMJ9A0MBggBDwUCBw4LC/kK9YCxEjAAABzUlEQVR4Xt2W4Y6DIBCEUVAXUKv7/g97EVqGZCVCyeWSm18gzld2WEzV/5d3jjrsNDKzdV/7B8uXLPX5mV2nn5dOPy8d/vkGMDiq9ysJOJg3X+0XgPjEUKX/DhDWXnX+W8CMYCv8AEBHWNbP/hJA7ejPB38BQNv19HzwS8B8us9L6PCiXwIWoMKYt9x3vKLgF4Apj85ckzXVdDL09kvAkUenw+TjN8IvATE6dNCYvXkU/ACk6LBvjxQ8h/EUtQ+qBFDruwg0w5Bac4TlHoAcjzh2YZyOhKoA3mbvXuMtAdQjAOe/ZjFSI4Cu6ZTVoBsAiC47h6UBgIPQWNpbAToAcCZTK2DAvB2A+R/tABnMHYA5C9G0AtB+WBpbALgAqGZtAuAKoppGgEEE6OoA8E8A/KjJ7tWetmV0BYBs3ABgawoGWsqA1/syoxqPZKCxBFg5enAGOw5XECQAH+U8zii3CYIE7KkAxAnpJcqAIAD4piNOIUoEAXDM9mM5sZsiQYbotc8LsF7VEACABos4Hwi3ANpEAQVCAWBQwDMBAPknrY4gAeinKoIE2LhQS5AAZ+GvIADQJBAA6CAsqpOg1ZeinXFrW4UPxeRVj4jU7+oH8lRFmPtbOikAAAAASUVORK5CYII=);
+      bottom: 20px;
     }
     .wrapper button:hover {
       background-color: rgba(224, 224, 224, 0.7);
@@ -63,12 +67,21 @@
   <div class="wrapper">
     <textarea id='chinese' rows="6" placeholder="输入中文，查询拼音，如：中国，中奖，中文，多音字"></textarea>
     <button id='chinese-pinyin'></button>
+    <button id='chinese-pinyin-sound'></button>
   </div>
   <div id="res"></div>
   <script src='./assets/js/pinyin.js'></script>
   <script>
     var btn = document.querySelector('#chinese-pinyin'),
-      input = document.querySelector('#chinese');
+        btnSound = document.querySelector('#chinese-pinyin-sound')
+        input = document.querySelector('#chinese');
+
+    input.oninput = function() {
+      clearTimeout(input.timeout || 0);
+      input.timeout = setTimeout(function(){
+        btn.click();
+      }, 2000)
+    }
 
     btn.onclick = function() {
 
@@ -76,6 +89,9 @@
         window.d = d;
         res.innerHTML = d.html;
       })
+    }
+    btnSound.onclick = function() {
+      playPinyinSound(input.value);
     }
   </script>
 </body>

@@ -48,4 +48,11 @@
     })
   }
 
+  var audio;
+  window.playPinyinSound = function(text) {
+    audio = audio || document.createElement('audio');
+    audio.src = 'http://tts.baidu.com/text2audio?lan=zh&pid=101&ie=UTF-8&text=' + encodeURIComponent(text);
+    audio.play();
+  }
+
 })();
