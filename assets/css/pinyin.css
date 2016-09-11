@@ -59,7 +59,7 @@ body {
   display: inline-block;
   text-align: center;
   padding: 5px;
-  min-width: 30px;
+  vertical-align: bottom;
 }
 .pinyin b {
   display: block;
@@ -68,6 +68,34 @@ body {
 .pinyin i {
   display: block;
   font-style: normal;
+  width: 50px;
+  font-size: 30px;
+  line-height: 50px;
+  border: solid 1px #ccc;
+  box-sizing: content-box;
+  padding: 0px;
+  height: 50px;
+  position: relative;
+}
+.pinyin i:before,
+.pinyin i:after {
+  content: '';
+  display: block;
+  position: absolute;
+  height: 0;
+  width: 100%;
+  top: 50%;
+  box-sizing: border-box;
+  border-top: dashed 1px rgba(204, 204, 204, 0.81);
+  z-index: -1;
+}
+.pinyin i:after {
+  top: 0;
+  height: 100%;
+  width: 0;
+  border-left: dashed 1px rgba(204, 204, 204, 0.81);
+  left: 50%;
+  z-index: -1;
 }
 
 .dialog {
