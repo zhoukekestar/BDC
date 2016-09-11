@@ -2,11 +2,11 @@
   var proxy = localStorage.getItem('pinyinProxy') || 'https://dev-common.toomao.com/proxy';
 
   var htmlIt = function(json) {
-    var html = '<p class="pinyin"><u></u>';
+    var html = '<p class="pinyin"><u><b></b><i></i></u>';
     for (var i = 0, len = json.trans_result.phonetic.length; i < len; i++) {
       var t = json.trans_result.phonetic[i];
       if (t.src_str === '\n') {
-        html += '<br><u></u>'
+        html += '<br><u><b></b><i></i></u>'
       } else {
         html += '<u><b>' + t.trg_str + '</b><i>' + t.src_str  + '</i></u>'
       }
@@ -58,6 +58,9 @@
   /*查询单个*/
   window.showSingleWorld = function(word) {
     word = word[0];
+    if (proxy === '') {
+      return callback && callback('Proxy is null. Please set pinyinProxy by localStorage.getItem("pinyinProxy") at first.')
+    }
 
     var body = {
       url: 'http://hanyu.baidu.com/s?wd=' + encodeURIComponent(word),
@@ -67,7 +70,7 @@
         'User-Agent':'Mozilla/5.0 (iPhone; CPU iPhone OS 9_1 like Mac OS X) AppleWebKit/601.1.46 (KHTML, like Gecko) Version/9.0 Mobile/13B143 Safari/601.1'
       }
     }
-    fetch('http://local.toomao.com:3005/proxy', {
+    fetch(proxy, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json; charset=UTF-8'
