@@ -40,6 +40,18 @@
     btnSound.onclick = function() {
       playPinyinSound(input.value);
     }
+    
+    // Init search param
+    !(function(){
+      var text = (text = location.search.match(/text=([^&=]*)/)) && text[1];
+      if (text) {
+        text = decodeURIComponent(text);
+        input.value = text;
+        btn.onclick();
+        document.querySelector('.wrapper').style.display = 'none';
+      }
+      
+    })();
   </script>
 </body>
 
