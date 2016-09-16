@@ -103,7 +103,7 @@
     if (!sDialog) {
       sDialog = document.createElement('div');
       sDialog.classList.add('dialog');
-      sDialog.innerHTML = "<span class='close'></span><div class='content'><img src=''><div class='sound'></div><audio src=''></div>";
+      sDialog.innerHTML = "<span class='close'>x</span><div class='content'><img src=''><div class='sound'></div><audio src=''></div>";
       document.body.appendChild(sDialog);
 
       sDialog.querySelector('.sound').onclick = function(e) {
