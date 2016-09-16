@@ -1,7 +1,6 @@
 {
   "name": "Pinyin",
   "short_name": "Pinyin",
-  "start_url": "../pinyin.html",
   "display": "standalone",
   "background_color": "#fff",
   "description": "Pinyin.",
