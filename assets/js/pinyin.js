@@ -35,6 +35,7 @@
       headers: {
         'Content-Type': 'application/json; charset=UTF-8'
       },
+      cache: 'force-cache',
       body: JSON.stringify(body)
     }).then(response => {
 
@@ -62,6 +63,13 @@
       return callback && callback('Proxy is null. Please set pinyinProxy by localStorage.getItem("pinyinProxy") at first.')
     }
 
+    var cacheData = localStorage.getItem('SW_' + word);
+    if (cacheData) {
+      cacheData = JSON.parse(cacheData);
+      showDialog(cacheData.gif, cacheData.url);
+      return;
+    }
+
     var body = {
       url: 'http://hanyu.baidu.com/s?wd=' + encodeURIComponent(word),
       method: 'GET',
@@ -75,6 +83,7 @@
       headers: {
         'Content-Type': 'application/json; charset=UTF-8'
       },
+      cache: 'force-cache',
       body: JSON.stringify(body)
     }).then(response => {
 
@@ -87,7 +96,13 @@
         // console.log(doc.querySelector('#word_bishun').dataset.gif);
         // console.log(doc.querySelector('#pinyin a').getAttribute('url'));
 
-        showDialog(doc.querySelector('#word_bishun').dataset.gif, doc.querySelector('#pinyin a').getAttribute('url'))
+        var data = {
+          gif: doc.querySelector('#word_bishun').dataset.gif,
+          url: doc.querySelector('#pinyin a').getAttribute('url')
+        }
+        localStorage.setItem('SW_' + word, JSON.stringify(data));
+
+        showDialog(data.gif, data.url);
       })
 
     })
