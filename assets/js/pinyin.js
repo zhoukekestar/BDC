@@ -1,4 +1,43 @@
 !(function(){
+  var PHONETIC_SYMBOL = {
+    "ā": "a1",
+    "á": "a2",
+    "ǎ": "a3",
+    "à": "a4",
+    "ē": "e1",
+    "é": "e2",
+    "ě": "e3",
+    "è": "e4",
+    "ō": "o1",
+    "ó": "o2",
+    "ǒ": "o3",
+    "ò": "o4",
+    "ī": "i1",
+    "í": "i2",
+    "ǐ": "i3",
+    "ì": "i4",
+    "ū": "u1",
+    "ú": "u2",
+    "ǔ": "u3",
+    "ù": "u4",
+    "ü": "v0",
+    "ǘ": "v2",
+    "ǚ": "v3",
+    "ǜ": "v4",
+    "ń": "n2",
+    "ň": "n3",
+    "": "m2"
+  };
+  var pinyinToABC = function(pinyin) {
+    for (var i = 0; i < pinyin.length; i++) {
+      var temp = PHONETIC_SYMBOL[pinyin[i]];
+      if (temp) {
+        pinyin = pinyin.replace(pinyin[i], temp[0])
+        return pinyin + temp[1];
+      }
+    }
+  }
+
   var proxy = localStorage.getItem('pinyinProxy') || 'https://dev-common.toomao.com/proxy';
 
   var htmlIt = function(json) {
@@ -57,7 +96,7 @@
   }
 
   /*查询单个*/
-  window.showSingleWorld = function(word) {
+  window.showSingleWorld = function(word, tone) {
     word = word[0];
     if (proxy === '') {
       return callback && callback('Proxy is null. Please set pinyinProxy by localStorage.getItem("pinyinProxy") at first.')
@@ -65,8 +104,7 @@
 
     var cacheData = localStorage.getItem('SW_' + word);
     if (cacheData) {
-      cacheData = JSON.parse(cacheData);
-      showDialog(cacheData.gif, cacheData.url);
+      showDialog(cacheData, 'http://appcdn.fanyi.baidu.com/zhdict/mp3/' + pinyinToABC(tone) + '.mp3');
       return;
     }
 
@@ -96,13 +134,10 @@
         // console.log(doc.querySelector('#word_bishun').dataset.gif);
         // console.log(doc.querySelector('#pinyin a').getAttribute('url'));
 
-        var data = {
-          gif: doc.querySelector('#word_bishun').dataset.gif,
-          url: doc.querySelector('#pinyin a').getAttribute('url')
-        }
-        localStorage.setItem('SW_' + word, JSON.stringify(data));
+        cacheData = doc.querySelector('#word_bishun').dataset.gif;
+        localStorage.setItem('SW_' + word, cacheData);
 
-        showDialog(data.gif, data.url);
+        showDialog(cacheData, 'http://appcdn.fanyi.baidu.com/zhdict/mp3/' + pinyinToABC(tone) + '.mp3');
       })
 
     })
@@ -153,7 +188,7 @@
       u = u.parentNode;
       if (u === document.body) return;
     }
-    showSingleWorld(u.querySelector('i').innerHTML);
+    showSingleWorld(u.querySelector('i').innerHTML, u.querySelector('b').innerHTML);
   }
 
 })();
