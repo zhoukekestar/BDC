@@ -28,6 +28,9 @@
     "ň": "n3",
     "": "m2"
   };
+  /*
+   * 将标准的拼音转换成英文并在最后带上声调
+  */
   var pinyinToABC = function(pinyin) {
     for (var i = 0; i < pinyin.length; i++) {
       var temp = PHONETIC_SYMBOL[pinyin[i]];
@@ -39,7 +42,12 @@
   }
 
   var proxy = localStorage.getItem('pinyinProxy') || 'https://dev-common.toomao.com/proxy';
-
+  var currenttext = (currenttext = location.search.match(/text=([^&=]*)/)) && currenttext[1];
+  currenttext = currenttext ? decodeURIComponent(currenttext) : '';
+  
+  /*
+   * html化又百度翻译返回的json数据
+   */
   var htmlIt = function(json) {
     var html = '<p class="pinyin"><u><b></b><i></i></u>';
     for (var i = 0, len = json.trans_result.phonetic.length; i < len; i++) {
@@ -55,10 +63,27 @@
 
   }
 
+  /*
+   * 翻译一段中文字符串，通过callback返回百度翻译结果
+   */
   window.pinyin = function(text, callback) {
 
     if (proxy === '') {
       return callback && callback('Proxy is null. Please set pinyinProxy by localStorage.getItem("pinyinProxy") at first.')
+    }
+
+    var json = currenttext && localStorage.getItem('TEXT_' + currenttext);
+    if (currenttext === text && json) {
+      try {
+
+        json = JSON.parse(json);
+        htmlIt(json);
+        callback && callback(null, json);
+        return;
+
+      } catch (e) {
+        console.log(e)
+      }
     }
 
     var body = {
@@ -79,6 +104,11 @@
     }).then(response => {
 
       response.json().then(json => {
+
+        if (currenttext && currenttext === text) {
+          localStorage.setItem('TEXT_' + currenttext, JSON.stringify(json));
+        }
+
         htmlIt(json);
         callback && callback(null, json)
       }).catch (function(e){
