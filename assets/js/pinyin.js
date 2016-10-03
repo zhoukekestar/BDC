@@ -41,7 +41,7 @@
     }
   }
 
-  var proxy = localStorage.getItem('pinyinProxy') || 'https://dev-common.toomao.com/proxy';
+  var proxy = localStorage.getItem('pinyinProxy') || 'https://common.toomao.com/proxy';
   var currenttext = (currenttext = location.search.match(/text=([^&=]*)/)) && currenttext[1];
   currenttext = currenttext ? decodeURIComponent(currenttext) : '';
   
