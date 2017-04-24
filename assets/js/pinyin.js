@@ -166,7 +166,7 @@
         // console.log(doc.querySelector('#pinyin a').getAttribute('url'));
 
         cacheData = doc.querySelector('#word_bishun');
-		cacheData = cacheData && cacheData.dataset.gif || '';
+		cacheData = (cacheData && cacheData.dataset.gif) || (cacheData && cacheData.dataset.src) || '';
         localStorage.setItem('SW_' + word, cacheData);
 
         showDialog(cacheData, 'http://appcdn.fanyi.baidu.com/zhdict/mp3/' + pinyinToABC(tone) + '.mp3');
