@@ -1,0 +1,58 @@
+<!DOCTYPE html manifest="/offline.manifest">
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>拼音</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
+  <link rel="manifest" href="/dist/bdd2cd6637461684a01ca32e2b3c0a1f.js">
+  
+  <link rel="stylesheet" href="/dist/3cb8af111c7a4a895a9ed4e34fbe4cd8.css">
+</head>
+
+<body>
+  <div class="wrapper">
+    <textarea id="chinese" rows="6" placeholder="输入中文，查询拼音，如：中国，中奖，中文，多音字"></textarea>
+    <button id="chinese-pinyin"></button>
+    <button id="chinese-pinyin-sound"></button>
+  </div>
+  <div id="res"></div>
+  <script src="/dist/7eab329c0e280ee7974baa8d3a35dc1f.js"></script>
+  <script>
+    var btn = document.querySelector('#chinese-pinyin'),
+        btnSound = document.querySelector('#chinese-pinyin-sound')
+        input = document.querySelector('#chinese');
+
+    input.oninput = function() {
+      clearTimeout(input.timeout || 0);
+      input.timeout = setTimeout(function(){
+        btn.click();
+      }, 2000)
+    }
+
+    btn.onclick = function() {
+
+      pinyin(input.value || '输入中文，查询拼音，如：中国，中奖，中文，多音字', function(e, d) {
+        window.d = d;
+        res.innerHTML = d.html;
+      })
+    }
+    btnSound.onclick = function() {
+      playPinyinSound(input.value);
+    }
+    
+    // Init search param
+    !(function(){
+      var text = (text = location.search.match(/text=([^&=]*)/)) && text[1];
+      if (text) {
+        text = decodeURIComponent(text);
+        input.value = text;
+        btn.onclick();
+        document.querySelector('.wrapper').style.display = 'none';
+      }
+      
+    })();
+  </script>
+</body>
+
+</html>

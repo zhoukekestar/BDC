@@ -1,0 +1,25 @@
+{
+  "name": "bdc",
+  "version": "1.0.0",
+  "description": "Break-Dark-Clouds plan. You can [try it online](https://zhoukekestar.github.io/BDC/).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zhoukekestar/BDC.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zhoukekestar/BDC/issues"
+  },
+  "homepage": "https://github.com/zhoukekestar/BDC#readme",
+  "dependencies": {
+    "pinyin-convert": "^1.0.8"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.7.1"
+  }
+}
