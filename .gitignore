@@ -31,3 +31,5 @@ node_modules
 logs
 build
 pids
+
+.cache

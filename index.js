@@ -8,7 +8,7 @@ var htmlIt = function(han, pinyin) {
   var html = '<p class="pinyin"><u><b></b><i></i></u>';
   for (var i = 0, len = han.length; i < len; i++) {
 
-    if (han[i] === '\n') {
+    if (han[i] === '@') {
       html += '<br><u><b></b><i></i></u>'
     } else {
       var py = pinyin[i];
@@ -30,7 +30,7 @@ var htmlIt = function(han, pinyin) {
 
   var cacheData = localStorage.getItem('SW_' + word);
   if (cacheData) {
-    showDialog(cacheData, 'http://appcdn.fanyi.baidu.com/zhdict/mp3/' + tone + '.mp3');
+    showDialog(cacheData, 'https://appcdn.fanyi.baidu.com/zhdict/mp3/' + tone + '.mp3');
     return;
   }
 
@@ -61,44 +61,63 @@ var htmlIt = function(han, pinyin) {
       // console.log(doc.querySelector('#pinyin a').getAttribute('url'));
 
       cacheData = doc.querySelector('#word_bishun');
-  cacheData = (cacheData && cacheData.dataset.gif) || (cacheData && cacheData.dataset.src) || '';
+      cacheData = (cacheData && cacheData.dataset.gif) || (cacheData && cacheData.dataset.src) || '';
       localStorage.setItem('SW_' + word, cacheData);
 
-      showDialog(cacheData, 'http://appcdn.fanyi.baidu.com/zhdict/mp3/' + tone + '.mp3');
+      showDialog(cacheData, 'https://appcdn.fanyi.baidu.com/zhdict/mp3/' + tone + '.mp3', word);
+    }).catch(e => {
+      showDialog('', 'https://appcdn.fanyi.baidu.com/zhdict/mp3/' + tone + '.mp3', word);
     })
 
+  }).catch(e => {
+    showDialog('', 'https://appcdn.fanyi.baidu.com/zhdict/mp3/' + tone + '.mp3', word);
   })
 
 }
 
 /* 显示读音弹框 */
 var sDialog = null;
-window.showDialog = function(img, audiosrc) {
-  img = img || 'data:image/png;base64,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';
-  audiosrc = audiosrc || 'http://appcdn.fanyi.baidu.com/zhdict/mp3/ni3.mp3';
-
+window.showDialog = function(img, audiosrc, text) {
   if (!sDialog) {
     sDialog = document.createElement('div');
     sDialog.classList.add('dialog');
-    sDialog.innerHTML = "<span class='close'></span><div class='content'><img src=''></div><audio src=''></div>";
     document.body.appendChild(sDialog);
+
+    sDialog.onclick = function() {
+      sDialog.classList.remove('show');
+      setTimeout(function(){
+        sDialog.style.display = 'none';
+      }, 500)
+    }
   }
 
-  sDialog.querySelector('img').src = img;
-  var audio = sDialog.querySelector('audio').src = audiosrc;
+  if (img) {
+    sDialog.innerHTML = `
+      <div class='content'>
+        <img src='${img}' />
+        <audio src='${audiosrc}' />
+      </div>
+    `;
+  } else {
+    sDialog.innerHTML = `
+      <div class='content'>
+        <h1>${text}</h1>
+        <audio src='${audiosrc}' />
+      </div>
+    `;
+  }
+
   sDialog.style.display = 'block';
-
-  sDialog.onclick = function() {
-    sDialog.classList.remove('show');
-    setTimeout(function(){
-      sDialog.style.display = 'none';
-    }, 500)
-  }
-
   setTimeout(function(){
     sDialog.classList.add('show');
     sDialog.querySelector('audio').play();
   })
+
+  // 确保都被清除
+  // for (var i = 0; i < 100000; i++) {
+  //   clearInterval(i);
+  // }
+  // console.log('clear ok')
 
   var interval = setInterval(function() {
     if (sDialog.classList.contains('show')) {
@@ -128,7 +147,7 @@ document.querySelector('#res').onclick = function(e) {
     text = decodeURIComponent(text);
     var han = text.split('').filter(item => item.trim());
 
-    convert(text.replace(/，/g, ' ， ').replace(/。/g, ' 。 '), {
+    convert(text.replace(/，/g, ' ， ').replace(/。/g, ' 。 ').replace(/@/g, ' @ '), {
       numbered: true,
     }).then(res => {
       var pinyin = [];
@@ -150,12 +169,13 @@ document.querySelector('#res').onclick = function(e) {
       });
 
       if (han.length != pinyin.length) {
+        console.log(han, pinyin)
         alert('汉字和拼音对接错误');
         return;
       }
 
-      console.log(han, pinyin);
-      console.log(htmlIt(han, pinyin));
+      // console.log(han, pinyin);
+      // console.log(htmlIt(han, pinyin));
 
       // console.log(JSON.stringify(pinyin));
       document.querySelector('#res').innerHTML = htmlIt(han, pinyin);

@@ -4,6 +4,9 @@
   "description": "Break-Dark-Clouds plan. You can [try it online](https://zhoukekestar.github.io/BDC/).",
   "main": "index.js",
   "scripts": {
+    "start": "parcel watch index.js",
+    "build": "NODE_ENV=production parcel index.js",
+    "serve": "serve .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
