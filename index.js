@@ -2,6 +2,7 @@ const convert = require('pinyin-convert');
 const split = require('pinyin-split')
 const utils = require('pinyin-utils')
 
+
 var proxy = localStorage.getItem('pinyinProxy') || 'https://common.toomao.com/proxy';
 
 var htmlIt = function(han, pinyin) {
@@ -30,7 +31,7 @@ var htmlIt = function(han, pinyin) {
 
   var cacheData = localStorage.getItem('SW_' + word);
   if (cacheData) {
-    showDialog(cacheData, 'https://appcdn.fanyi.baidu.com/zhdict/mp3/' + tone + '.mp3');
+    showDialog(cacheData, 'https://appcdn.fanyi.baidu.com/zhdict/mp3/' + tone + '.mp3', word);
     return;
   }
 
@@ -78,6 +79,14 @@ var htmlIt = function(han, pinyin) {
 /* 显示读音弹框 */
 var sDialog = null;
 window.showDialog = function(img, audiosrc, text) {
+  // alert(`${img}#${audiosrc}#${text}`);
+  var audio = new Audio(audiosrc);
+  audio.autoplay = true;
+  audio.play();
+  var interval = setInterval(() => {
+    audio.play();
+  }, 3000);
+
   if (!sDialog) {
     sDialog = document.createElement('div');
     sDialog.classList.add('dialog');
@@ -87,22 +96,25 @@ window.showDialog = function(img, audiosrc, text) {
       sDialog.classList.remove('show');
       setTimeout(function(){
         sDialog.style.display = 'none';
+        clearInterval(sDialog.interval);
+        // sDialog.audio.remove();
       }, 500)
     }
   }
+
+  sDialog.audio = audio;
+  sDialog.interval = interval;
 
   if (img) {
     sDialog.innerHTML = `
       <div class='content'>
         <img src='${img}' />
-        <audio src='${audiosrc}' />
       </div>
     `;
   } else {
     sDialog.innerHTML = `
       <div class='content'>
         <h1>${text}</h1>
-        <audio src='${audiosrc}' />
       </div>
     `;
   }
@@ -110,23 +122,7 @@ window.showDialog = function(img, audiosrc, text) {
   sDialog.style.display = 'block';
   setTimeout(function(){
     sDialog.classList.add('show');
-    sDialog.querySelector('audio').play();
-  })
-
-  // 确保都被清除
-  // for (var i = 0; i < 100000; i++) {
-  //   clearInterval(i);
-  // }
-  // console.log('clear ok')
-
-  var interval = setInterval(function() {
-    if (sDialog.classList.contains('show')) {
-      sDialog.querySelector('audio').play();
-    } else {
-      clearInterval(interval);
-    }
-  }, 3000);
-
+  });
 }
 
 /*点击单个字母*/

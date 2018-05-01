@@ -7,11 +7,18 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no">
   <link rel="manifest" href="./assets/manifest.json">
   <link rel="stylesheet" href="./assets/css/pinyin.css">
+  <script>
+    window.onerror = function(params) {
+      alert(params);
+    }
+
+    
+  </script>
 </head>
 
 <body>
   <div id="res"></div>
   <script src='./dist/index.js'></script>
-</body>
 
+</body>
 </html>
