@@ -1,0 +1,19 @@
+{
+  "name": "bdc",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "jimp": "^0.2.28",
+    "pinyin-convert": "^1.6.0",
+    "pinyin-split": "^1.9.0",
+    "pinyin-utils": "^1.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}

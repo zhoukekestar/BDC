@@ -24,6 +24,7 @@ var htmlIt = function(han, pinyin) {
 
  /*查询单个*/
  window.showSingleWorld = function(word, tone) {
+tone = tone.replace('5', '');
   word = word[0];
   if (proxy === '') {
     return callback && callback('Proxy is null. Please set pinyinProxy by localStorage.getItem("pinyinProxy") at first.')
@@ -31,7 +32,7 @@ var htmlIt = function(han, pinyin) {
 
   var cacheData = localStorage.getItem('SW_' + word);
   if (cacheData) {
-    showDialog(cacheData, 'https://appcdn.fanyi.baidu.com/zhdict/mp3/' + tone + '.mp3', word);
+    showDialog(cacheData, 'http://xh.5156edu.com/xhzdmp3abc/' + tone + '.mp3', word);
     return;
   }
 
@@ -65,13 +66,13 @@ var htmlIt = function(han, pinyin) {
       cacheData = (cacheData && cacheData.dataset.gif) || (cacheData && cacheData.dataset.src) || '';
       localStorage.setItem('SW_' + word, cacheData);
 
-      showDialog(cacheData, 'https://appcdn.fanyi.baidu.com/zhdict/mp3/' + tone + '.mp3', word);
+      showDialog(cacheData, 'http://xh.5156edu.com/xhzdmp3abc/' + tone + '.mp3', word);
     }).catch(e => {
-      showDialog('', 'https://appcdn.fanyi.baidu.com/zhdict/mp3/' + tone + '.mp3', word);
+      showDialog('', 'http://xh.5156edu.com/xhzdmp3abc/' + tone + '.mp3', word);
     })
 
   }).catch(e => {
-    showDialog('', 'https://appcdn.fanyi.baidu.com/zhdict/mp3/' + tone + '.mp3', word);
+    showDialog('', 'http://xh.5156edu.com/xhzdmp3abc/' + tone + '.mp3', word);
   })
 
 }

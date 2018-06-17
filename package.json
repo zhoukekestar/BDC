@@ -20,7 +20,9 @@
   },
   "homepage": "https://github.com/zhoukekestar/BDC#readme",
   "dependencies": {
-    "pinyin-convert": "^1.0.8"
+    "pinyin-convert": "^1.6.0",
+    "pinyin-split": "^1.9.0",
+    "pinyin-utils": "^1.3.0"
   },
   "devDependencies": {
     "parcel-bundler": "^1.7.1"
