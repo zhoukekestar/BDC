@@ -47,12 +47,15 @@
       document.getElementById('res').innerHTML = html;
       // return html;
     }
+    
+    var tonesMap = {'zai5': 'zai4'};
 
     /*查询单个*/
     window.showSingleWorld = function (word, tone) {
       // 第 5 声调为轻声
-      // 通过百度拼音 + 百度 mp3 读音，已经不需要这么处理了
-      // tone = tone.replace('5', '');
+      // 通过百度拼音 + 百度 mp3 读音，已经不需要这么处理了，但有些读音不存在，特殊处理一下
+      tone = tonesMap[tone] || tone;
+      
       word = word[0];
 
       var cacheData = localStorage.getItem(SINGLEWORD(word));
