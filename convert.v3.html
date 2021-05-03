@@ -51,7 +51,8 @@
     /*查询单个*/
     window.showSingleWorld = function (word, tone) {
       // 第 5 声调为轻声
-      tone = tone.replace('5', '');
+      // 通过百度拼音 + 百度 mp3 读音，已经不需要这么处理了
+      // tone = tone.replace('5', '');
       word = word[0];
 
       var cacheData = localStorage.getItem(SINGLEWORD(word));
