@@ -24,7 +24,25 @@
 
     var htmlIt = function (han) {
       var data = JSON.parse(localStorage[HAN2PINYINCACHE(han)]).result;
+      
+      // 当文字为 “土地啦” 的时候，会出现错误，出现 pinyin 的字段
+      if (data.pinyin instanceof Array) {
+        var data = data.pinyin;
+        var tempData = [];
+        data.forEach(function(item) {
+          // 多音字直接取第一个
+          var py = item.py[0].split(' ');
+          var mark = item.mark[0].split(' ');
 
+          for (var i = 0; i < py.length; i++) {
+            tempData.push({
+              py: [py[i]],
+              mark: [mark[i]],
+            });
+          }
+        })
+        data  = tempData;
+      }
       // console.log(text, data)
       var html = '<p class="pinyin"><u><b></b><i></i></u>';
       for (var i = 0, len = data.length; i < len; i++) {
